@@ -3,8 +3,14 @@ from typing import Literal
 from pydantic import BaseModel
 
 
+class HistoryMessage(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str
+
+
 class CustomerRequest(BaseModel):
     message: str
+    history: list[HistoryMessage] = []
 
 
 class IntentResult(BaseModel):

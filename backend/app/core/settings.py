@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     ollama_url: str = "http://localhost:11434"
-    ollama_model: str = "gpt-oss-20b"
+    ollama_model: str = "gpt-oss:20b"
     intent_api_url: str = "http://localhost:8001"
 
     model_config = SettingsConfigDict(

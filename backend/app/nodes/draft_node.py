@@ -1,10 +1,10 @@
 import json
 from app.clients.ollama_client import OllamaClient
-from app.core.schemas import IntentResult, PriorityResult, PolicyResult, DraftResult
+from app.core.schemas import HistoryMessage, IntentResult, PriorityResult, PolicyResult, DraftResult
 
 _PROMPT_TEMPLATE = """\
 You are a professional banking customer support assistant.
-
+{history_section}
 Customer message: {message}
 Detected intent: {intent} (confidence: {confidence:.0%})
 Priority level: {priority_level}
@@ -23,14 +23,25 @@ Respond ONLY with valid JSON in this exact format:
 {{"draft_reply": "...", "missing_info": [...], "next_action": "..."}}"""
 
 
-async def run(
+def _build_prompt(
     message: str,
+    history: list[HistoryMessage],
     intent: IntentResult,
     priority: PriorityResult,
     policy: PolicyResult,
-) -> DraftResult:
+) -> str:
+    if history:
+        lines = "\n".join(
+            f"{'Customer' if m.role == 'user' else 'Agent'}: {m.content}"
+            for m in history
+        )
+        history_section = f"\nPrevious conversation:\n{lines}\n"
+    else:
+        history_section = ""
+
     guidelines_text = "\n".join(f"- {g}" for g in policy.guidelines)
-    prompt = _PROMPT_TEMPLATE.format(
+    return _PROMPT_TEMPLATE.format(
+        history_section=history_section,
         message=message,
         intent=intent.intent,
         confidence=intent.confidence,
@@ -39,8 +50,8 @@ async def run(
         guidelines=guidelines_text,
     )
 
-    raw = await OllamaClient().generate(prompt)
 
+def _parse_raw(raw: str) -> DraftResult:
     try:
         raw_clean = raw.strip()
         if "```" in raw_clean:
@@ -55,3 +66,18 @@ async def run(
         )
     except (json.JSONDecodeError, KeyError):
         return DraftResult(draft_reply=raw, missing_info=[], next_action="review")
+
+
+async def run(
+    message: str,
+    history: list[HistoryMessage],
+    intent: IntentResult,
+    priority: PriorityResult,
+    policy: PolicyResult,
+) -> DraftResult:
+    prompt = _build_prompt(message, history, intent, priority, policy)
+    client = OllamaClient()
+    collected = ""
+    async for chunk in client.generate_stream(prompt):
+        collected += chunk
+    return _parse_raw(collected)
