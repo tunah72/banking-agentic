@@ -1,0 +1,62 @@
+[
+  {
+    "message": "My card was stolen this morning, I need to block it immediately.",
+    "expected_intent": "lost_or_stolen_card",
+    "expected_priority": "high"
+  },
+  {
+    "message": "How do I activate my new card that just arrived?",
+    "expected_intent": "activate_my_card",
+    "expected_priority": "low"
+  },
+  {
+    "message": "I was charged twice for the same transaction at the supermarket yesterday.",
+    "expected_intent": "transaction_charged_twice",
+    "expected_priority": "high"
+  },
+  {
+    "message": "My transfer to my friend has been pending for 3 days, what is happening?",
+    "expected_intent": "pending_transfer",
+    "expected_priority": "medium"
+  },
+  {
+    "message": "What is the current exchange rate for USD to EUR?",
+    "expected_intent": "exchange_rate",
+    "expected_priority": "low"
+  },
+  {
+    "message": "I tried to top up my account with my debit card but it failed.",
+    "expected_intent": "top_up_failed",
+    "expected_priority": "medium"
+  },
+  {
+    "message": "I forgot my PIN and now it is blocked after too many wrong attempts.",
+    "expected_intent": "pin_blocked",
+    "expected_priority": "high"
+  },
+  {
+    "message": "How do I set up Apple Pay with my card?",
+    "expected_intent": "apple_pay_or_google_pay",
+    "expected_priority": "low"
+  },
+  {
+    "message": "I requested a refund from an online store 2 weeks ago but it is not showing in my account.",
+    "expected_intent": "Refund_not_showing_up",
+    "expected_priority": "medium"
+  },
+  {
+    "message": "There are suspicious transactions on my account, I think my card details have been stolen.",
+    "expected_intent": "compromised_card",
+    "expected_priority": "high"
+  },
+  {
+    "message": "Can I use my card in Japan? Is it accepted there?",
+    "expected_intent": "country_support",
+    "expected_priority": "low"
+  },
+  {
+    "message": "My contactless payment is not working, the card keeps getting declined at payment terminals.",
+    "expected_intent": "contactless_not_working",
+    "expected_priority": "medium"
+  }
+]
