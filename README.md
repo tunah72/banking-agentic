@@ -1,8 +1,8 @@
 # Banking AI Agent
 
 > **Course:** Applications of Natural Language Processing in Industry (CSC15012)  
-> **Instructor:** Dr. Nguyễn Hồng Bửu Long  
-> **University:** Đại học Khoa học Tự nhiên — ĐHQG TP.HCM
+> **Instructor:** Dr. Nguyen Hong Buu Long & Dr. Le Duc Khoan
+
 
 ## Overview
 
@@ -176,4 +176,4 @@ banking-agentic/
 
 ## Demo Video
 
-*Link will be added after recording.*
+Link [here](https://drive.google.com/file/d/1RIKYo1Yiutr9UpogiXlk3pR2jbQO6x1L/view?usp=sharing)
